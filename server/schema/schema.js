@@ -1,5 +1,5 @@
 import { authors, books } from "../dummyData.js";
-import { GraphQLID, GraphQLObjectType, GraphQLSchema, GraphQLString } from "graphql";
+import { GraphQLID, GraphQLList, GraphQLObjectType, GraphQLSchema, GraphQLString } from "graphql";
 
 const AuthorType = new GraphQLObjectType({
   name: "Author",
@@ -13,6 +13,12 @@ const AuthorType = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
+    authors: {
+      type: new GraphQLList(AuthorType),
+      resolve(parent, args) {
+        return authors;
+      }
+    },
     author: {
       type: AuthorType,
       args: { id: { type: GraphQLID } },
