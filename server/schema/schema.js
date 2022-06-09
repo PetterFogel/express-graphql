@@ -93,6 +93,56 @@ const mutation = new GraphQLObjectType({
       resolve(parent, args) {
         return Author.findByIdAndDelete(args.id);
       }
+    },
+    addBook: {
+      type: BookType,
+      args: {
+        name: { type: GraphQLNonNull(GraphQLString) },
+        description: { type: GraphQLNonNull(GraphQLString) },
+        genre: { type: GraphQLNonNull(GraphQLString) },
+        published: { type: GraphQLNonNull(GraphQLString) },
+        authorId: { type: GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parent, args) {
+        const book = new Book({
+          name: args.name,
+          description: args.description,
+          genre: args.genre,
+          published: args.published,
+          authorId: args.authorId
+        });
+
+        return book.save();
+      }
+    },
+    deleteBook: {
+      type: BookType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parent, args) {
+        return Book.findByIdAndDelete(args.id);
+      }
+    },
+    updateBook: {
+      type: BookType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLString) },
+        name: { type: GraphQLString },
+        description: { type: GraphQLString },
+        genre: { type: GraphQLString },
+        published: { type: GraphQLString }
+      },
+      resolve(parent, args) {
+        return Book.findByIdAndUpdate(args.id, {
+          $set: {
+            name: args.name,
+            description: args.description,
+            genre: args.genre,
+            published: args.published
+          }
+        });
+      }
     }
   }
 });
