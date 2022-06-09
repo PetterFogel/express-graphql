@@ -1,5 +1,13 @@
-import { authors, books } from "../dummyData.js";
-import { GraphQLID, GraphQLList, GraphQLObjectType, GraphQLSchema, GraphQLString } from "graphql";
+import {
+  GraphQLID,
+  GraphQLList,
+  GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLString
+} from "graphql";
+import Author from "../models/Author.js";
+import Book from "../models/Book.js";
 
 const AuthorType = new GraphQLObjectType({
   name: "Author",
@@ -21,7 +29,7 @@ const BookType = new GraphQLObjectType({
     author: {
       type: AuthorType,
       resolve(parent, args) {
-        return authors.find((author) => author.id === parent.authorId);
+        return Author.findById(parent.authorId);
       }
     }
   })
@@ -33,32 +41,63 @@ const RootQuery = new GraphQLObjectType({
     authors: {
       type: new GraphQLList(AuthorType),
       resolve(parent, args) {
-        return authors;
+        return Author.find();
       }
     },
     author: {
       type: AuthorType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
-        return authors.find((author) => author.id === args.id);
+        return Author.findById(args.id);
       }
     },
     books: {
       type: new GraphQLList(BookType),
       resolve(parent, args) {
-        return books;
+        return Book.find();
       }
     },
     book: {
       type: BookType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
-        return books.find((book) => book.id === args.id);
+        return Book.findById(args.id);
+      }
+    }
+  }
+});
+
+const mutation = new GraphQLObjectType({
+  name: "Mutation",
+  fields: {
+    addAuthor: {
+      type: AuthorType,
+      args: {
+        name: { type: GraphQLNonNull(GraphQLString) },
+        nationality: { type: GraphQLNonNull(GraphQLString) }
+      },
+      resolve(parent, args) {
+        const author = new Author({
+          name: args.name,
+          nationality: args.nationality
+        });
+
+        return author.save();
+      }
+    },
+    deleteAuthor: {
+      type: AuthorType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parent, args) {
+        return Author.findByIdAndDelete(args.id);
       }
     }
   }
 });
 
 export const schema = new GraphQLSchema({
-  query: RootQuery
+  query: RootQuery,
+  mutation
 });
