@@ -1,0 +1,58 @@
+.root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.homeInfoContainer {
+  margin-top: 4rem;
+  margin-left: 10rem;
+  position: relative;
+}
+
+.homeTitle {
+  font-size: 3rem;
+  font-weight: 300;
+  font-family: "Playfair Display", serif;
+  width: 20rem;
+}
+
+.homeSubtitle {
+  font-size: 1.1rem;
+  font-weight: 300;
+  font-family: "Playfair Display", serif;
+  margin: 1.5rem 0rem;
+}
+
+.primaryBtn {
+  font-size: 1.2rem;
+  padding: 0.5rem 2.5rem;
+  background: #222;
+  color: #fff;
+  font-family: "Playfair Display", serif;
+  font-weight: 200;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.secondaryBtn {
+  font-size: 1.2rem;
+  padding: 0.5rem 2.1rem;
+  border: 2px solid #222;
+  background: #fff;
+  color: #222;
+  font-family: "Playfair Display", serif;
+  font-weight: 200;
+  cursor: pointer;
+}
+
+.circle {
+  width: 20rem;
+  height: 20rem;
+  background: #eee;
+  border-radius: 100%;
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  z-index: -100;
+}

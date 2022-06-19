@@ -7,10 +7,12 @@ import { routeFactory } from "../routes/routeFactory";
 
 export const AppRoutes: FC = () => {
   return (
-    <Routes>
-      <Route path={routeFactory.homeScreen.home()} element={<HomeScreen />} />
-      <Route path={routeFactory.bookScreen.bookList()} element={<BookScreen />} />
-      <Route path={routeFactory.authorScreen.authorList()} element={<AuthorScreen />} />
-    </Routes>
+    <div style={{ padding: "2rem" }}>
+      <Routes>
+        <Route path={routeFactory.homeScreen.home()} element={<HomeScreen />} />
+        <Route path={routeFactory.bookScreen.bookList()} element={<BookScreen />} />
+        <Route path={routeFactory.authorScreen.authorList()} element={<AuthorScreen />} />
+      </Routes>
+    </div>
   );
 };
