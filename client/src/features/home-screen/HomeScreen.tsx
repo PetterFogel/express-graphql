@@ -10,7 +10,8 @@ export const HomeScreen: FC = () => {
         <button className={classes.primaryBtn}>Books</button>
         <button className={classes.secondaryBtn}>Authors</button>
       </div>
-      <div className={classes.circle}></div>
+      <div className={classes.circle2}></div>
+      <div className={classes.circle1}></div>
     </div>
   );
 };

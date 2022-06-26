@@ -6,7 +6,6 @@
 
 .homeInfoContainer {
   margin-top: 4rem;
-  margin-left: 10rem;
   position: relative;
 }
 
@@ -46,13 +45,35 @@
   cursor: pointer;
 }
 
-.circle {
+.circle1 {
   width: 20rem;
   height: 20rem;
   background: #eee;
   border-radius: 100%;
   position: absolute;
-  top: 30%;
-  left: 30%;
+  top: 15%;
+  left: 20%;
   z-index: -100;
+}
+
+.circle2 {
+  width: 20rem;
+  height: 20rem;
+  background: rgb(243, 243, 243);
+  border-radius: 100%;
+  position: absolute;
+  top: 40%;
+  left: 55%;
+  z-index: -100;
+}
+
+@media screen and (max-width: 1000px) {
+  .circle1 {
+    top: 20%;
+    left: 10%;
+  }
+
+  .circle2 {
+    display: none;
+  }
 }
