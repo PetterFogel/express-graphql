@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Book } from "../../models/book";
+import classes from "./style/bookStyle.module.css";
 
 interface BookListProps {
   books: Book[];
@@ -7,14 +8,19 @@ interface BookListProps {
 
 export const BookList: FC<BookListProps> = ({ books }) => {
   return (
-    <div>
+    <table className={classes.table}>
+      <tr className={classes.tr}>
+        <th className={classes.th}>Name</th>
+        <th className={classes.th}>Genre</th>
+        <th className={classes.th}>Author</th>
+      </tr>
       {books.map((book) => (
-        <div key={book.id}>
-          <p>{book.name}</p>
-          <p>{book.genre}</p>
-          <p>{book.author.name}</p>
-        </div>
+        <tr key={book.id} className={classes.tr}>
+          <td className={classes.td}>{book.name}</td>
+          <td className={classes.td}>{book.genre}</td>
+          <td className={classes.td}>{book.author.name}</td>
+        </tr>
       ))}
-    </div>
+    </table>
   );
 };
