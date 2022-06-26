@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Author } from "../../models/author";
+import classes from "./style/authorStyle.module.css";
 
 interface AuthorListProps {
   authors: Author[];
@@ -7,13 +8,17 @@ interface AuthorListProps {
 
 export const AuthorList: FC<AuthorListProps> = ({ authors }) => {
   return (
-    <div>
+    <table className={classes.table}>
+      <tr className={classes.tr}>
+        <th className={classes.th}>Name</th>
+        <th className={classes.th}>Nationality</th>
+      </tr>
       {authors.map((author) => (
-        <div key={author.id}>
-          <p>{author.name}</p>
-          <p>{author.nationality}</p>
-        </div>
+        <tr key={author.id} className={classes.tr}>
+          <td className={classes.td}>{author.name}</td>
+          <td className={classes.td}>{author.nationality}</td>
+        </tr>
       ))}
-    </div>
+    </table>
   );
 };
