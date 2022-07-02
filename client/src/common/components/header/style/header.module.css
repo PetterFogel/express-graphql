@@ -2,12 +2,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 10vh;
+  height: 7vh;
   padding: 0rem 2rem;
 }
 
 .logo {
-  font-size: 2rem;
+  font-size: 1, 5rem;
   font-weight: 300;
   font-family: "Signika", sans-serif;
   cursor: pointer;
