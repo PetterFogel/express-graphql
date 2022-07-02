@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { FC } from "react";
 import { GET_BOOKS } from "../../apollo/templates/book/bookQueries";
+import { Loader } from "../../common/components/loader/Loader";
 import { BookList } from "./BookList";
 import classes from "./style/bookStyle.module.css";
 
@@ -11,8 +12,14 @@ export const BookScreen: FC = () => {
 
   return (
     <>
-      <h2 className={classes.pageTitle}>Book Screen</h2>
-      {loading ? <p>Loading...</p> : <BookList books={books} />}
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <h2 className={classes.pageTitle}>Books</h2>
+          <BookList books={books} />
+        </>
+      )}
     </>
   );
 };
