@@ -26,6 +26,8 @@
 .primaryBtn {
   font-size: 1.2rem;
   padding: 0.5rem 2.5rem;
+  border: 2px solid #222;
+  outline: none;
   background: #222;
   color: #fff;
   font-family: "Playfair Display", serif;
@@ -38,6 +40,7 @@
   font-size: 1.2rem;
   padding: 0.5rem 2.1rem;
   border: 2px solid #222;
+  outline: none;
   background: #fff;
   color: #222;
   font-family: "Playfair Display", serif;
