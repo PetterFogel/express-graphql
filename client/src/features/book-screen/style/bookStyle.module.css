@@ -10,7 +10,6 @@
 
 tr:nth-child(even) {
   background-color: #eee;
-  cursor: pointer;
 }
 
 .th {
@@ -21,4 +20,19 @@ tr:nth-child(even) {
 td {
   text-align: left;
   padding: 8px;
+}
+
+.modifyHolder {
+  display: flex;
+  justify-content: space-around;
+}
+
+.trashIcon {
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: gray;
+}
+
+.trashIcon:hover {
+  color: red;
 }

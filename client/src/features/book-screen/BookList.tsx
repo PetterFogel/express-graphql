@@ -15,6 +15,7 @@ export const BookList: FC<BookListProps> = ({ books }) => {
         <th className={classes.th}>Author</th>
         <th className={classes.th}>Genre</th>
         <th className={classes.th}>Published</th>
+        <th className={classes.th}></th>
       </tr>
       {books.map((book) => (
         <BookItem key={book.id} book={book} />

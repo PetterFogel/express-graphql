@@ -13,6 +13,7 @@ export const AuthorList: FC<AuthorListProps> = ({ authors }) => {
       <tr className={classes.tr}>
         <th className={classes.th}>Name</th>
         <th className={classes.th}>Nationality</th>
+        <th className={classes.th}></th>
       </tr>
       {authors.map((author) => (
         <AuthorItem key={author.id} author={author} />
