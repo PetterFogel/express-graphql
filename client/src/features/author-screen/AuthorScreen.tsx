@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useQuery } from "@apollo/client";
-import { GET_AUTHORS } from "../../apollo/templates/author/queries/authorQueries";
+import { GET_AUTHORS } from "../../apollo/templates/author/authorQueries";
 import { AuthorList } from "./AuthorList";
 import { Loader } from "../../common/components/loader/Loader";
 import classes from "./style/authorStyle.module.css";
