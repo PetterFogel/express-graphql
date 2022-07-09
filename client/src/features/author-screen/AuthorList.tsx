@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Author } from "../../models/author";
+import { AuthorItem } from "./AuthorItem";
 import classes from "./style/authorStyle.module.css";
 
 interface AuthorListProps {
@@ -14,10 +15,7 @@ export const AuthorList: FC<AuthorListProps> = ({ authors }) => {
         <th className={classes.th}>Nationality</th>
       </tr>
       {authors.map((author) => (
-        <tr key={author.id} className={classes.tr}>
-          <td className={classes.td}>{author.name}</td>
-          <td className={classes.td}>{author.nationality}</td>
-        </tr>
+        <AuthorItem key={author.id} author={author} />
       ))}
     </table>
   );
