@@ -3,3 +3,7 @@ export interface Author {
   name: string;
   nationality: string;
 }
+
+export interface AuthorData {
+  authors: Author[];
+}
