@@ -10,16 +10,20 @@ interface BookListProps {
 export const BookList: FC<BookListProps> = ({ books }) => {
   return (
     <table className={classes.table}>
-      <tr className={classes.tr}>
-        <th className={classes.th}>Name</th>
-        <th className={classes.th}>Author</th>
-        <th className={classes.th}>Genre</th>
-        <th className={classes.th}>Published</th>
-        <th className={classes.th}></th>
-      </tr>
-      {books.map((book) => (
-        <BookItem key={book.id} book={book} />
-      ))}
+      <thead>
+        <tr className={classes.tr}>
+          <th className={classes.th}>Name</th>
+          <th className={classes.th}>Author</th>
+          <th className={classes.th}>Genre</th>
+          <th className={classes.th}>Published</th>
+          <th className={classes.th}></th>
+        </tr>
+      </thead>
+      <tbody>
+        {books.map((book) => (
+          <BookItem key={book.id} book={book} />
+        ))}
+      </tbody>
     </table>
   );
 };

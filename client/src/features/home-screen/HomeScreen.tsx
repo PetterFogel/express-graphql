@@ -10,7 +10,7 @@ export const HomeScreen: FC = () => {
     <div className={classes.root}>
       <div className={classes.homeInfoContainer}>
         <h1 className={classes.homeTitle}>Add a new book or author</h1>
-        <h3 className={classes.homeSubtitle}>check out the lists</h3>
+        <h3 className={classes.homeSubtitle}>Check out the lists</h3>
         <button
           className={classes.primaryBtn}
           onClick={() => navigate(routeFactory.bookScreen.bookList())}

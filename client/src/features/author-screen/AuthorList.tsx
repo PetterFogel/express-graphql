@@ -10,14 +10,18 @@ interface AuthorListProps {
 export const AuthorList: FC<AuthorListProps> = ({ authors }) => {
   return (
     <table className={classes.table}>
-      <tr className={classes.tr}>
-        <th className={classes.th}>Name</th>
-        <th className={classes.th}>Nationality</th>
-        <th className={classes.th}></th>
-      </tr>
-      {authors.map((author) => (
-        <AuthorItem key={author.id} author={author} />
-      ))}
+      <thead>
+        <tr className={classes.tr}>
+          <th className={classes.th}>Name</th>
+          <th className={classes.th}>Nationality</th>
+          <th className={classes.th}></th>
+        </tr>
+      </thead>
+      <tbody>
+        {authors.map((author) => (
+          <AuthorItem key={author.id} author={author} />
+        ))}
+      </tbody>
     </table>
   );
 };
