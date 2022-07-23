@@ -7,3 +7,8 @@ export interface Author {
 export interface AuthorData {
   authors: Author[];
 }
+
+export interface AuthorFormValues {
+  name: string;
+  nationality: string;
+}
