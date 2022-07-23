@@ -1,11 +1,12 @@
 export const routeFactory = {
   homeScreen: {
-    home: () => "/"
+    home: () => "/",
   },
   bookScreen: {
-    bookList: () => "/books"
+    bookList: () => "/books",
+    bookDetails: (bookId: string) => `/books/${bookId}`,
   },
   authorScreen: {
-    authorList: () => "/authors"
-  }
+    authorList: () => "/authors",
+  },
 };

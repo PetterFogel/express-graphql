@@ -8,6 +8,10 @@
   width: 100%;
 }
 
+tr {
+  cursor: pointer;
+}
+
 tr:nth-child(even) {
   background-color: #eee;
 }
