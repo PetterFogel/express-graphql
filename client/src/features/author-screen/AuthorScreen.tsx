@@ -12,14 +12,8 @@ export const AuthorScreen: FC = () => {
 
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          <h2 className={classes.pageTitle}>Authors</h2>
-          <AuthorList authors={authors} />
-        </>
-      )}
+      <h2 className={classes.pageTitle}>Authors</h2>
+      {loading ? <Loader /> : <AuthorList authors={authors} />}
     </>
   );
 };

@@ -12,14 +12,8 @@ export const BookScreen: FC = () => {
 
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          <h2 className={classes.pageTitle}>Books</h2>
-          <BookList books={books} />
-        </>
-      )}
+      <h2 className={classes.pageTitle}>Books</h2>
+      {loading ? <Loader /> : <BookList books={books} />}
     </>
   );
 };
