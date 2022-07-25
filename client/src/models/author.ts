@@ -4,7 +4,7 @@ export interface Author {
   nationality: string;
 }
 
-export interface AuthorData {
+export interface AuthorsData {
   authors: Author[];
 }
 

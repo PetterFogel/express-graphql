@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Author, AuthorData } from "../../models/author";
+import { Author, AuthorsData } from "../../models/author";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useMutation } from "@apollo/client";
 import { DELETE_AUTHOR } from "../../apollo/templates/author/authorMutations";
@@ -14,16 +14,14 @@ export const AuthorItem: FC<AuthorItemProps> = ({ author }) => {
   const [deleteAuthor] = useMutation(DELETE_AUTHOR, {
     variables: { id: author.id },
     update(cache, { data: { deleteAuthor } }) {
-      const data: AuthorData | null = cache.readQuery({ query: GET_AUTHORS });
+      const data: AuthorsData | null = cache.readQuery({ query: GET_AUTHORS });
       cache.writeQuery({
         query: GET_AUTHORS,
         data: {
-          authors: data?.authors.filter(
-            (author) => author.id !== deleteAuthor.id
-          ),
-        },
+          authors: data?.authors.filter((author) => author.id !== deleteAuthor.id)
+        }
       });
-    },
+    }
   });
 
   return (
@@ -31,10 +29,7 @@ export const AuthorItem: FC<AuthorItemProps> = ({ author }) => {
       <td className={classes.td}>{author.name}</td>
       <td className={classes.td}>{author.nationality}</td>
       <td className={classes.modifyHolder}>
-        <FaRegTrashAlt
-          className={classes.trashIcon}
-          onClick={() => deleteAuthor()}
-        />
+        <FaRegTrashAlt className={classes.trashIcon} onClick={() => deleteAuthor()} />
       </td>
     </tr>
   );

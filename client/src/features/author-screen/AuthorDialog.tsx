@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, FormEvent, useState } from "react";
 import { Dialog, DialogContent } from "@mui/material";
 import classes from "./style/authorStyle.module.css";
-import { AuthorData, AuthorFormValues } from "../../models/author";
+import { AuthorFormValues, AuthorsData } from "../../models/author";
 import { useMutation } from "@apollo/client";
 import { ADD_AUTHOR } from "../../apollo/templates/author/authorMutations";
 import { GET_AUTHORS } from "../../apollo/templates/author/authorQueries";
@@ -11,37 +11,34 @@ interface AuthorDialogProps {
   onDialogCloseClick: () => void;
 }
 
-export const AuthorDialog: FC<AuthorDialogProps> = ({
-  isDialogOpen,
-  onDialogCloseClick,
-}) => {
+export const AuthorDialog: FC<AuthorDialogProps> = ({ isDialogOpen, onDialogCloseClick }) => {
   const [formValues, setFormValues] = useState<AuthorFormValues>({
     name: "",
-    nationality: "",
+    nationality: ""
   });
 
   const [addAuthor] = useMutation(ADD_AUTHOR, {
     variables: { name: formValues.name, nationality: formValues.nationality },
     update(cache, { data: { addAuthor } }) {
-      const data: AuthorData | null = cache.readQuery({ query: GET_AUTHORS });
+      const data: AuthorsData | null = cache.readQuery({ query: GET_AUTHORS });
       cache.writeQuery({
         query: GET_AUTHORS,
-        data: { authors: [...data!.authors, addAuthor] },
+        data: { authors: [...data!.authors, addAuthor] }
       });
-    },
+    }
   });
 
   const nameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setFormValues({
       ...formValues,
-      name: event.target.value,
+      name: event.target.value
     });
   };
 
   const nationalityChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setFormValues({
       ...formValues,
-      nationality: event.target.value,
+      nationality: event.target.value
     });
   };
 
@@ -59,12 +56,7 @@ export const AuthorDialog: FC<AuthorDialogProps> = ({
   };
 
   return (
-    <Dialog
-      open={isDialogOpen}
-      onClose={onDialogCloseClick}
-      maxWidth="sm"
-      fullWidth
-    >
+    <Dialog open={isDialogOpen} onClose={onDialogCloseClick} maxWidth="sm" fullWidth>
       <DialogContent>
         <h2 className={classes.dialogTitle}>Add Author</h2>
         <form onSubmit={submitHandler}>
@@ -87,10 +79,7 @@ export const AuthorDialog: FC<AuthorDialogProps> = ({
             />
           </div>
           <div className={classes.btnHolder}>
-            <button
-              className={classes.secondaryBtn}
-              onClick={onDialogCloseClick}
-            >
+            <button className={classes.secondaryBtn} onClick={onDialogCloseClick}>
               Cancel
             </button>
             <button type="submit" className={classes.primaryBtn}>
