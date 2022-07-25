@@ -15,7 +15,6 @@ export const BookList: FC<BookListProps> = ({ books }) => {
           <th className={classes.th}>Name</th>
           <th className={classes.th}>Author</th>
           <th className={classes.th}>Genre</th>
-          <th className={classes.th}></th>
         </tr>
       </thead>
       <tbody>

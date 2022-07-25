@@ -1,10 +1,11 @@
-import { useQuery } from "@apollo/client";
-import { Divider } from "@mui/material";
 import { FC } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import { Divider } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import { GET_BOOK } from "../../apollo/templates/book/bookQueries";
+import { DELETE_BOOK } from "../../apollo/templates/book/bookMutations";
+import { GET_BOOK, GET_BOOKS } from "../../apollo/templates/book/bookQueries";
 import { Loader } from "../../common/components/loader/Loader";
-import { BookData } from "../../models/book";
+import { BooksData } from "../../models/book";
 import { routeFactory } from "../../routes/routeFactory";
 import classes from "./style/bookStyle.module.css";
 
@@ -13,21 +14,37 @@ export const BookDetails: FC = () => {
   const { bookId } = useParams();
   const {
     data: { book } = {},
-    loading,
-    error,
-  } = useQuery<BookData>(GET_BOOK, {
-    variables: { id: bookId },
+    loading: isBookLoading,
+    error: bookError
+  } = useQuery(GET_BOOK, {
+    variables: { id: bookId }
   });
 
-  if (error || !book) return <p>Something went wrong...</p>;
+  const [deleteBook] = useMutation(DELETE_BOOK, {
+    variables: { id: book?.id },
+    onCompleted: () => {
+      navigate(routeFactory.bookScreen.bookList());
+    },
+    update(cache, { data: { deleteBook } }) {
+      const data: BooksData | null = cache.readQuery({ query: GET_BOOKS });
+      cache.writeQuery({
+        query: GET_BOOKS,
+        data: {
+          books: data?.books.filter((book) => book.id !== deleteBook.id)
+        }
+      });
+    }
+  });
+
+  if (bookError) return <p>Something went wrong...</p>;
 
   return (
     <div className={classes.detailContainer}>
-      {loading ? (
+      <h2 className={classes.pageTitle}>Book Details:</h2>
+      {isBookLoading ? (
         <Loader />
       ) : (
         <>
-          <h2 className={classes.pageTitle}>Book Details:</h2>
           <h3 className={classes.bookTitle}>{book.name}</h3>
           <div className={classes.bookInfoContainer}>
             <div className={classes.infoHolder}>
@@ -61,7 +78,9 @@ export const BookDetails: FC = () => {
             >
               Back to list
             </button>
-            <button className={classes.primaryBtn}>Delete book</button>
+            <button className={classes.primaryBtn} onClick={() => deleteBook()}>
+              Delete book
+            </button>
           </div>
         </>
       )}
