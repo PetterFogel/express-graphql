@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Book } from "../../models/book";
 import { BookItem } from "./BookItem";
-import classes from "./style/bookStyle.module.css";
+import globalClasses from "../../style/globalStyle.module.css";
 
 interface BookListProps {
   books: Book[];
@@ -9,12 +9,12 @@ interface BookListProps {
 
 export const BookList: FC<BookListProps> = ({ books }) => {
   return (
-    <table className={classes.table}>
+    <table className={globalClasses.table}>
       <thead>
-        <tr className={classes.tr}>
-          <th className={classes.th}>Name</th>
-          <th className={classes.th}>Author</th>
-          <th className={classes.th}>Genre</th>
+        <tr className={globalClasses.tr}>
+          <th className={globalClasses.th}>Name</th>
+          <th className={globalClasses.th}>Author</th>
+          <th className={globalClasses.th}>Genre</th>
         </tr>
       </thead>
       <tbody>

@@ -1,10 +1,11 @@
 import { ChangeEvent, FC, FormEvent, useState } from "react";
 import { Dialog, DialogContent } from "@mui/material";
-import classes from "./style/authorStyle.module.css";
 import { AuthorFormValues, AuthorsData } from "../../models/author";
 import { useMutation } from "@apollo/client";
 import { ADD_AUTHOR } from "../../apollo/templates/author/authorMutations";
 import { GET_AUTHORS } from "../../apollo/templates/author/authorQueries";
+import globalClasses from "../../style/globalStyle.module.css";
+import classes from "./style/authorStyle.module.css";
 
 interface AuthorDialogProps {
   isDialogOpen: boolean;
@@ -58,31 +59,31 @@ export const AuthorDialog: FC<AuthorDialogProps> = ({ isDialogOpen, onDialogClos
   return (
     <Dialog open={isDialogOpen} onClose={onDialogCloseClick} maxWidth="sm" fullWidth>
       <DialogContent>
-        <h2 className={classes.dialogTitle}>Add Author</h2>
+        <h2 className={globalClasses.dialogTitle}>Add Author</h2>
         <form onSubmit={submitHandler}>
-          <div className={classes.formControl}>
-            <label className={classes.inputLabel}>Name</label>
+          <div className={globalClasses.formControl}>
+            <label className={globalClasses.inputLabel}>Name</label>
             <input
               type="text"
               value={formValues.name}
-              className={classes.inputField}
+              className={globalClasses.inputField}
               onChange={nameChangeHandler}
             />
           </div>
           <div>
-            <label className={classes.inputLabel}>Nationality</label>
+            <label className={globalClasses.inputLabel}>Nationality</label>
             <input
               type="text"
               value={formValues.nationality}
-              className={classes.inputField}
+              className={globalClasses.inputField}
               onChange={nationalityChangeHandler}
             />
           </div>
           <div className={classes.btnHolder}>
-            <button className={classes.secondaryBtn} onClick={onDialogCloseClick}>
+            <button className={globalClasses.secondaryBtn} onClick={onDialogCloseClick}>
               Cancel
             </button>
-            <button type="submit" className={classes.primaryBtn}>
+            <button type="submit" className={globalClasses.primaryBtn}>
               Save
             </button>
           </div>

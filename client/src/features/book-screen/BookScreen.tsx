@@ -3,7 +3,7 @@ import { FC } from "react";
 import { GET_BOOKS } from "../../apollo/templates/book/bookQueries";
 import { Loader } from "../../common/components/loader/Loader";
 import { BookList } from "./BookList";
-import classes from "./style/bookStyle.module.css";
+import globalClasses from "../../style/globalStyle.module.css";
 
 export const BookScreen: FC = () => {
   const { data: { books } = {}, loading, error } = useQuery(GET_BOOKS);
@@ -12,7 +12,7 @@ export const BookScreen: FC = () => {
 
   return (
     <>
-      <h2 className={classes.pageTitle}>Books</h2>
+      <h2 className={globalClasses.pageTitle}>Books</h2>
       {loading ? <Loader /> : <BookList books={books} />}
     </>
   );

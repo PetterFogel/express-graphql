@@ -4,6 +4,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { useMutation } from "@apollo/client";
 import { DELETE_AUTHOR } from "../../apollo/templates/author/authorMutations";
 import { GET_AUTHORS } from "../../apollo/templates/author/authorQueries";
+import globalClasses from "../../style/globalStyle.module.css";
 import classes from "./style/authorStyle.module.css";
 
 interface AuthorItemProps {
@@ -25,9 +26,9 @@ export const AuthorItem: FC<AuthorItemProps> = ({ author }) => {
   });
 
   return (
-    <tr className={classes.tr}>
-      <td className={classes.td}>{author.name}</td>
-      <td className={classes.td}>{author.nationality}</td>
+    <tr className={globalClasses.tr}>
+      <td className={globalClasses.td}>{author.name}</td>
+      <td className={globalClasses.td}>{author.nationality}</td>
       <td className={classes.modifyHolder}>
         <FaRegTrashAlt className={classes.trashIcon} onClick={() => deleteAuthor()} />
       </td>

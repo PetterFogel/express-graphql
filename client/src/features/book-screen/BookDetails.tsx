@@ -8,6 +8,7 @@ import { Loader } from "../../common/components/loader/Loader";
 import { BooksData } from "../../models/book";
 import { routeFactory } from "../../routes/routeFactory";
 import classes from "./style/bookStyle.module.css";
+import globalClasses from "../../style/globalStyle.module.css";
 
 export const BookDetails: FC = () => {
   const navigate = useNavigate();
@@ -73,12 +74,12 @@ export const BookDetails: FC = () => {
           <Divider />
           <div className={classes.buttonHolder}>
             <button
-              className={classes.secondaryBtn}
+              className={globalClasses.secondaryBtn}
               onClick={() => navigate(routeFactory.bookScreen.bookList())}
             >
               Back to list
             </button>
-            <button className={classes.primaryBtn} onClick={() => deleteBook()}>
+            <button className={globalClasses.primaryBtn} onClick={() => deleteBook()}>
               Delete book
             </button>
           </div>
