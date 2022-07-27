@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { Dialog, DialogContent, TextField } from "@mui/material";
-import { AuthorFormValues, AuthorsData } from "../../models/author";
+import { AuthorFormValues } from "../../models/author";
 import { useMutation } from "@apollo/client";
 import { ADD_AUTHOR } from "../../apollo/templates/author/authorMutations";
-import { GET_AUTHORS } from "../../apollo/templates/author/authorQueries";
 import { useFormik } from "formik";
 import { addAuthorValidationHandler } from "./helpers/addAuthorValidationHandler";
+import { updateCacheAfterAddAuthor } from "./helpers/updateCacheAfterAddAuthorts";
 import globalClasses from "../../style/globalStyle.module.css";
 import classes from "./style/authorStyle.module.css";
 
@@ -36,11 +36,7 @@ export const AuthorDialog: FC<AuthorDialogProps> = ({ isDialogOpen, onDialogClos
 
   const [addAuthor] = useMutation(ADD_AUTHOR, {
     update(cache, { data: { addAuthor } }) {
-      const data: AuthorsData | null = cache.readQuery({ query: GET_AUTHORS });
-      cache.writeQuery({
-        query: GET_AUTHORS,
-        data: { authors: [...data!.authors, addAuthor] }
-      });
+      updateCacheAfterAddAuthor(cache, addAuthor);
     }
   });
 

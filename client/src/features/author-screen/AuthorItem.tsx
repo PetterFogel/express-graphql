@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { Author, AuthorsData } from "../../models/author";
+import { Author } from "../../models/author";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useMutation } from "@apollo/client";
 import { DELETE_AUTHOR } from "../../apollo/templates/author/authorMutations";
-import { GET_AUTHORS } from "../../apollo/templates/author/authorQueries";
+import { updateCacheAfterDeleteAuthor } from "./helpers/updateCacheAfterDeleteAuthor";
 import globalClasses from "../../style/globalStyle.module.css";
 import classes from "./style/authorStyle.module.css";
 
@@ -15,13 +15,7 @@ export const AuthorItem: FC<AuthorItemProps> = ({ author }) => {
   const [deleteAuthor] = useMutation(DELETE_AUTHOR, {
     variables: { id: author.id },
     update(cache, { data: { deleteAuthor } }) {
-      const data: AuthorsData | null = cache.readQuery({ query: GET_AUTHORS });
-      cache.writeQuery({
-        query: GET_AUTHORS,
-        data: {
-          authors: data?.authors.filter((author) => author.id !== deleteAuthor.id)
-        }
-      });
+      updateCacheAfterDeleteAuthor(cache, deleteAuthor);
     }
   });
 
