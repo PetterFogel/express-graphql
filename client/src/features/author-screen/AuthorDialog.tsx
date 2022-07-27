@@ -1,9 +1,11 @@
-import { ChangeEvent, FC, FormEvent, useState } from "react";
-import { Dialog, DialogContent } from "@mui/material";
+import { FC } from "react";
+import { Dialog, DialogContent, TextField } from "@mui/material";
 import { AuthorFormValues, AuthorsData } from "../../models/author";
 import { useMutation } from "@apollo/client";
 import { ADD_AUTHOR } from "../../apollo/templates/author/authorMutations";
 import { GET_AUTHORS } from "../../apollo/templates/author/authorQueries";
+import { useFormik } from "formik";
+import { addAuthorValidationHandler } from "./helpers/addAuthorValidationHandler";
 import globalClasses from "../../style/globalStyle.module.css";
 import classes from "./style/authorStyle.module.css";
 
@@ -13,13 +15,26 @@ interface AuthorDialogProps {
 }
 
 export const AuthorDialog: FC<AuthorDialogProps> = ({ isDialogOpen, onDialogCloseClick }) => {
-  const [formValues, setFormValues] = useState<AuthorFormValues>({
-    name: "",
-    nationality: ""
+  const validate = (values: AuthorFormValues) => {
+    return addAuthorValidationHandler(values);
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      nationality: ""
+    },
+    validate,
+    enableReinitialize: false,
+    validateOnMount: true,
+    onSubmit: (values, { resetForm }) => {
+      addAuthor({ variables: { ...values } });
+      onDialogCloseClick();
+      resetForm();
+    }
   });
 
   const [addAuthor] = useMutation(ADD_AUTHOR, {
-    variables: { name: formValues.name, nationality: formValues.nationality },
     update(cache, { data: { addAuthor } }) {
       const data: AuthorsData | null = cache.readQuery({ query: GET_AUTHORS });
       cache.writeQuery({
@@ -29,58 +44,41 @@ export const AuthorDialog: FC<AuthorDialogProps> = ({ isDialogOpen, onDialogClos
     }
   });
 
-  const nameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setFormValues({
-      ...formValues,
-      name: event.target.value
-    });
-  };
-
-  const nationalityChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setFormValues({
-      ...formValues,
-      nationality: event.target.value
-    });
-  };
-
-  const submitHandler = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log(formValues);
-
-    if (formValues.name === "" || formValues.nationality === "")
-      return alert("Please fill in all fields");
-
-    addAuthor();
-
-    setFormValues({ name: "", nationality: "" });
-    onDialogCloseClick();
-  };
-
   return (
     <Dialog open={isDialogOpen} onClose={onDialogCloseClick} maxWidth="sm" fullWidth>
       <DialogContent>
         <h2 className={globalClasses.dialogTitle}>Add Author</h2>
-        <form onSubmit={submitHandler}>
+        <form onSubmit={formik.handleSubmit}>
           <div className={globalClasses.formControl}>
             <label className={globalClasses.inputLabel}>Name</label>
-            <input
+            <TextField
+              id="name"
               type="text"
-              value={formValues.name}
+              size="small"
               className={globalClasses.inputField}
-              onChange={nameChangeHandler}
+              helperText={formik.touched.name && formik.errors.name}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              {...formik.getFieldProps("name")}
             />
           </div>
-          <div>
+          <div className={globalClasses.formControl}>
             <label className={globalClasses.inputLabel}>Nationality</label>
-            <input
+            <TextField
+              id="nationality"
               type="text"
-              value={formValues.nationality}
+              size="small"
               className={globalClasses.inputField}
-              onChange={nationalityChangeHandler}
+              helperText={formik.touched.nationality && formik.errors.nationality}
+              error={formik.touched.nationality && Boolean(formik.errors.nationality)}
+              {...formik.getFieldProps("nationality")}
             />
           </div>
           <div className={classes.btnHolder}>
-            <button className={globalClasses.secondaryBtn} onClick={onDialogCloseClick}>
+            <button
+              type="button"
+              className={globalClasses.secondaryBtn}
+              onClick={onDialogCloseClick}
+            >
               Cancel
             </button>
             <button type="submit" className={globalClasses.primaryBtn}>
