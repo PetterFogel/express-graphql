@@ -15,7 +15,7 @@ export const AuthorItem: FC<AuthorItemProps> = ({ author }) => {
   const [deleteAuthor] = useMutation(DELETE_AUTHOR, {
     variables: { id: author.id },
     update(cache, { data: { deleteAuthor } }) {
-      updateCacheAfterDeleteAuthor(cache, deleteAuthor);
+      updateCacheAfterDeleteAuthor(cache, deleteAuthor.id);
     }
   });
 
