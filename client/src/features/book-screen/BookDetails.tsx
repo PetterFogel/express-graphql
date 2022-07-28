@@ -3,12 +3,12 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Divider } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { DELETE_BOOK } from "../../apollo/templates/book/bookMutations";
-import { GET_BOOK, GET_BOOKS } from "../../apollo/templates/book/bookQueries";
+import { GET_BOOK } from "../../apollo/templates/book/bookQueries";
 import { Loader } from "../../common/components/loader/Loader";
-import { BooksData } from "../../models/book";
 import { routeFactory } from "../../routes/routeFactory";
-import classes from "./style/bookStyle.module.css";
+import { updateCacheAfterDeleteBook } from "./helpers/updateCacheAfterDeleteBook";
 import globalClasses from "../../style/globalStyle.module.css";
+import classes from "./style/bookStyle.module.css";
 
 export const BookDetails: FC = () => {
   const navigate = useNavigate();
@@ -27,13 +27,7 @@ export const BookDetails: FC = () => {
       navigate(routeFactory.bookScreen.bookList());
     },
     update(cache, { data: { deleteBook } }) {
-      const data: BooksData | null = cache.readQuery({ query: GET_BOOKS });
-      cache.writeQuery({
-        query: GET_BOOKS,
-        data: {
-          books: data?.books.filter((book) => book.id !== deleteBook.id)
-        }
-      });
+      updateCacheAfterDeleteBook(cache, deleteBook.id);
     }
   });
 
